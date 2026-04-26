@@ -86,9 +86,6 @@ class JarvisAgent:
             if self._handle_builtin_command(command):
                 return
 
-            # Add user message to conversation
-            self.conversation.add_user_message(command)
-
             # Check if user wants screen context
             use_vision = any(
                 word in command
@@ -99,6 +96,9 @@ class JarvisAgent:
                 result = self._process_with_vision(command)
             else:
                 result = self._process_command(command)
+
+            # Add messages to conversation history after brain processing
+            self.conversation.add_user_message(command)
 
             # Speak the response
             if result.get("response"):
@@ -206,8 +206,8 @@ class JarvisAgent:
 
     def process_text_command(self, command: str) -> dict[str, Any]:
         """Process a text command (for non-voice input). Returns the result."""
-        self.conversation.add_user_message(command)
         result = self._process_command(command)
+        self.conversation.add_user_message(command)
 
         if result.get("response"):
             self.conversation.add_assistant_message(result["response"])

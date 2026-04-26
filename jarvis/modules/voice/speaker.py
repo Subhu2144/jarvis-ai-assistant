@@ -55,6 +55,7 @@ class VoiceSpeaker:
                 continue
             except Exception as e:
                 logger.error(f"Speech error: {e}")
+                self._speech_queue.task_done()
 
         engine.stop()
 

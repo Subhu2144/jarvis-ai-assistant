@@ -124,7 +124,11 @@ def main() -> None:
     else:
         if args.continuous:
             console.print("[cyan]Continuous listening mode enabled.[/]")
-        run_voice_mode(config)
+            agent = JarvisAgent(config)
+            agent.listener.set_continuous_mode(True)
+            agent.start()
+        else:
+            run_voice_mode(config)
 
 
 if __name__ == "__main__":
