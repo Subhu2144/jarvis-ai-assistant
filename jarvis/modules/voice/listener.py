@@ -21,11 +21,18 @@ class VoiceListener:
         self.recognizer.energy_threshold = config.energy_threshold
         self.recognizer.pause_threshold = config.pause_threshold
         self.recognizer.dynamic_energy_threshold = True
-        self.microphone = sr.Microphone()
+        self._microphone: sr.Microphone | None = None
         self._listening = False
         self._wake_word_active = True
         self._on_command: Callable[[str], None] | None = None
         self._thread: threading.Thread | None = None
+
+    @property
+    def microphone(self) -> sr.Microphone:
+        """Lazily initialize the microphone on first access."""
+        if self._microphone is None:
+            self._microphone = sr.Microphone()
+        return self._microphone
 
     def calibrate(self) -> None:
         """Calibrate microphone for ambient noise."""
