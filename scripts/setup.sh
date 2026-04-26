@@ -25,6 +25,7 @@ if [ "$OS" = "Linux" ]; then
         xdotool \
         xclip \
         scrot \
+        gnome-screenshot \
         python3-tk \
         python3-dev \
         libasound2-dev \
