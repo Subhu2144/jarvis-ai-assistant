@@ -65,7 +65,7 @@ class Brain:
 
     def __init__(self, config: LLMConfig) -> None:
         self.config = config
-        self.client = OpenAI(api_key=config.api_key)
+        self.client = OpenAI(api_key=config.api_key, base_url=config.base_url)
         self.model = config.model
 
     def think(self, user_input: str, context: list[dict[str, str]] | None = None) -> dict[str, Any]:

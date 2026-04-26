@@ -45,6 +45,7 @@ class VoiceSpeaker:
             try:
                 text = self._speech_queue.get(timeout=1)
                 if text is None:
+                    self._speech_queue.task_done()
                     break
 
                 logger.debug(f"Speaking: {text}")

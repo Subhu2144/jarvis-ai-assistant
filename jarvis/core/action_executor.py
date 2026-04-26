@@ -199,7 +199,9 @@ class ActionExecutor:
 
     def _handle_search_web(self, params: dict[str, Any]) -> dict[str, Any]:
         query = params.get("query", "")
-        url = f"https://www.google.com/search?q={query.replace(' ', '+')}"
+        from urllib.parse import quote_plus
+
+        url = f"https://www.google.com/search?q={quote_plus(query)}"
         return self.app_launcher.open_url(url)
 
     def _handle_set_volume(self, params: dict[str, Any]) -> dict[str, Any]:

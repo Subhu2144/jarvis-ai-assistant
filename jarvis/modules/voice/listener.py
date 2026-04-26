@@ -127,7 +127,7 @@ class VoiceListener:
     def stop(self) -> None:
         """Stop the listener."""
         self._listening = False
-        if self._thread:
+        if self._thread and self._thread is not threading.current_thread():
             self._thread.join(timeout=5)
             self._thread = None
         logger.info("[yellow]Voice listener stopped.[/]")

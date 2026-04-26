@@ -93,7 +93,7 @@ def main() -> None:
     parser.add_argument(
         "--model",
         default=None,
-        help="OpenAI model to use (default: gpt-4o)",
+        help="LLM model to use (default: llama-3.3-70b-versatile)",
     )
 
     args = parser.parse_args()

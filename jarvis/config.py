@@ -27,11 +27,12 @@ class VoiceConfig:
 class LLMConfig:
     """LLM settings."""
 
-    api_key: str = os.getenv("OPENAI_API_KEY", "")
-    model: str = os.getenv("LLM_MODEL", "gpt-4o")
+    api_key: str = os.getenv("GROQ_API_KEY", "")
+    base_url: str = os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1")
+    model: str = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
     temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.3"))
     max_tokens: int = int(os.getenv("LLM_MAX_TOKENS", "2048"))
-    vision_model: str = os.getenv("LLM_VISION_MODEL", "gpt-4o")
+    vision_model: str = os.getenv("LLM_VISION_MODEL", "llama-3.3-70b-versatile")
 
 
 @dataclass
@@ -71,5 +72,5 @@ class AppConfig:
         """Validate configuration and return list of issues."""
         issues = []
         if not self.llm.api_key:
-            issues.append("OPENAI_API_KEY is not set. Set it in .env or environment.")
+            issues.append("GROQ_API_KEY is not set. Set it in .env or environment.")
         return issues
