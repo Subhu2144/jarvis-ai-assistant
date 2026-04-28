@@ -10,7 +10,7 @@ A voice-controlled agentic AI that runs on your laptop. Speak naturally and Jarv
 - **File Management** — Create, read, move, delete, and search files using voice commands
 - **Web Browsing** — Open URLs, search the web, all hands-free
 - **System Control** — Adjust volume, brightness, lock screen, get system info
-- **Screen Understanding** — Takes screenshots and uses GPT-4 Vision to understand what's on your screen
+- **Screen Understanding** — Takes screenshots and uses LLM vision to understand what's on your screen
 - **Context-Aware** — Remembers your conversation and uses it to give better responses
 - **Persistent Memory** — Saves preferences and context between sessions
 - **Text Mode** — Fall back to text input when no microphone is available
@@ -23,7 +23,7 @@ jarvis/
 ├── main.py                      # Entry point & CLI
 ├── core/
 │   ├── agent.py                 # Main orchestrator
-│   ├── brain.py                 # LLM integration (GPT-4)
+│   ├── brain.py                 # LLM integration (Groq / Llama)
 │   └── action_executor.py       # Translates plans to actions
 ├── modules/
 │   ├── voice/
@@ -57,7 +57,7 @@ chmod +x scripts/setup.sh
 
 ```bash
 cp .env.example .env
-# Edit .env and add your OpenAI API key
+# Edit .env and add your Groq API key
 ```
 
 ### 3. Run
@@ -78,13 +78,13 @@ jarvis --continuous
 jarvis --wake-word hey-computer
 
 # Use a specific model
-jarvis --model gpt-4o-mini
+jarvis --model llama-3.1-8b-instant
 ```
 
 ## Requirements
 
 - **Python 3.10+**
-- **OpenAI API Key** (for GPT-4 / GPT-4 Vision)
+- **Groq API Key** (free at https://console.groq.com/keys)
 - **Microphone** (for voice mode)
 - **Speakers** (for voice output)
 
@@ -141,11 +141,12 @@ All settings can be configured via environment variables or `.env` file:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `OPENAI_API_KEY` | (required) | Your OpenAI API key |
+| `GROQ_API_KEY` | (required) | Your Groq API key |
+| `LLM_BASE_URL` | `https://api.groq.com/openai/v1` | LLM API endpoint |
 | `WAKE_WORD` | `jarvis` | Word to activate listening |
 | `VOICE_RATE` | `175` | Speech speed (words per minute) |
 | `VOICE_VOLUME` | `0.9` | Speech volume (0.0 to 1.0) |
-| `LLM_MODEL` | `gpt-4o` | OpenAI model for understanding |
+| `LLM_MODEL` | `llama-3.3-70b-versatile` | LLM model for understanding |
 | `LLM_TEMPERATURE` | `0.3` | Response creativity (0.0 to 1.0) |
 | `MAX_CONVERSATION_HISTORY` | `20` | Messages to remember |
 | `CONVERSATION_TIMEOUT` | `300` | Seconds before session resets |
@@ -154,7 +155,7 @@ All settings can be configured via environment variables or `.env` file:
 
 1. **Listen** — Microphone captures your voice continuously
 2. **Recognize** — Google Speech Recognition converts speech to text
-3. **Understand** — GPT-4 interprets your intent and plans actions
+3. **Understand** — Llama 3.3 (via Groq) interprets your intent and plans actions
 4. **Execute** — Actions are performed on your laptop (mouse, keyboard, apps, files, etc.)
 5. **Respond** — Jarvis speaks back to confirm what was done
 6. **Remember** — Conversation context is maintained for follow-up commands
