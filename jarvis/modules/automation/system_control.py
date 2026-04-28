@@ -37,7 +37,11 @@ class SystemController:
                     [
                         "powershell",
                         "-c",
-                        "(New-Object -ComObject WScript.Shell).SendKeys([char]173)",
+                        (
+                            "$vol = New-Object -ComObject WScript.Shell; "
+                            "1..50 | ForEach-Object { $vol.SendKeys([char]174) }; "
+                            f"1..{level // 2} | ForEach-Object {{ $vol.SendKeys([char]175) }}"
+                        ),
                     ],
                     capture_output=True,
                 )

@@ -148,7 +148,16 @@ class Brain:
             )
 
             content = response.choices[0].message.content or "{}"
-            return json.loads(content)
+            result = json.loads(content)
+
+            if "thought" not in result:
+                result["thought"] = ""
+            if "response" not in result:
+                result["response"] = "I'm not sure how to help with that."
+            if "actions" not in result:
+                result["actions"] = []
+
+            return result
 
         except Exception as e:
             logger.error(f"Screen analysis error: {e}")

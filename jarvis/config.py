@@ -32,7 +32,7 @@ class LLMConfig:
     model: str = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
     temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.3"))
     max_tokens: int = int(os.getenv("LLM_MAX_TOKENS", "2048"))
-    vision_model: str = os.getenv("LLM_VISION_MODEL", "llama-3.3-70b-versatile")
+    vision_model: str = os.getenv("LLM_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
 
 
 @dataclass
